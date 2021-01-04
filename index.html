@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width, shrink-to-fit=no">
+    <title>Panolens.js</title>
+    <style>
+      html, body {
+        margin: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background-color: #000;
+      }
+
+      #panolens-separate-container {
+        position: absolute;
+        width: 300px;
+        height: 150px;
+        right: 0;
+        top: 100px;
+      }
+
+      #desc-container, #desc-container2, #desc-container3, #desc-container4 {
+        max-width: 500px;
+        max-height: 500px;
+        min-width: 200px;
+        min-height: 250px;
+        background: #fff;
+        color: #000;
+        border-radius: 3px;
+        overflow: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      #desc-container, #desc-container2, #desc-container3, #desc-container4 > iframe {
+        border: none;
+        width:100%;
+      }
+
+      .title {
+        font-size: 1.5em;
+        text-align: center;
+        padding: 5px;
+      }
+
+      .text {
+        padding: 0 20px 20px 20px;
+      }
+
+      #panolens-separate-container:-webkit-full-screen{
+        left: 0;
+        top: 0;
+      }
+      #panolens-separate-container:-moz-full-screen{
+        left: 0;
+        top: 0;
+      }
+      #panolens-separate-container:-ms-fullscreen{
+        left: 0;
+        top: 0;
+      }
+      #panolens-separate-container:fullscreen {
+        left: 0;
+        top: 0;
+      }
+    </style>
+  </head>
+
+  <body>
+
+    <div id="desc-container" style="display:none">
+      <iframe width="500" src="https://www.youtube.com/embed/Z8fxoQyxIbY" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      <div class="title">L'histoire de la construction de la Tour Eiffel</div>
+      <div class="text">L'histoire de la construction de la Tour Eiffel, avec des images d'archives de Ludres et Pompey.</div>
+    </div>
+
+    <div id="desc-container2" style="display:none">
+      <iframe src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Dimensions_Eiffel_Tower-fr.svg/500px-Dimensions_Eiffel_Tower-fr.svg.png"></iframe>
+      <div class="title">TOUR EIFFEL</div>
+      <div class="text">La tour Eiffel est une tour de fer puddlé de 324 mètres de hauteur située à Paris, à l’extrémité nord-ouest du parc du Champ-de-Mars en bordure de la Seine dans le 7e arrondissement. Son adresse officielle est 5, avenue Anatole-France.
+
+        Construite en deux ans par Gustave Eiffel et ses collaborateurs pour l’Exposition universelle de Paris de 1889, et initialement nommée « tour de 300 mètres », elle est devenue le symbole de la capitale française et un site touristique de premier plan : il s’agit du troisième site culturel français payant le plus visité en 2015, avec 5,9 millions de visiteurs en 2016. Depuis son ouverture au public, elle a accueilli plus de 300 millions de visiteurs.</div>
+    </div>
+
+    <div id="desc-container3" style="display:none">
+      <iframe width="500" src="https://www.youtube.com/embed/EBnDZOPBkbU" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      <div class="title">Jardins du Trocadero</div>
+      <div class="text">Jardins duTrocadero (Gardens of the Trocadero), Paris, France 2013, near Eiffel tower, carousel
+        The place was named in honour of the Battle of Trocadero, in which the fortified Isla del Trocadero, in southern Spain, was captured by French forces led by the Duc d'Angoulême, son of the future king, Charles X, on August 31, 1823. France had intervened on behalf of King Ferdinand VII of Spain, whose rule was contested by a liberal rebellion. Trocadero restored the autocratic Spanish Bourbon Ferdinand VII to the throne of Spain, in an action that defined the Restoration.</div>
+    </div>
+
+    <div id="desc-container4" style="display:none">
+      <iframe src="https://cache-graphicslib.viator.com/graphicslib/page-images/742x525/135369_Paris_Trocadero_591.jpg"></iframe>
+      <div class="title">TROCADERO</div>
+      <div class="text">En face de la Tour Eiffel, de l'autre côté de la rivière, le grand Trocadéro est l'un des quartiers les plus visités de Paris: une étendue de jardins aménagés et des allées monumentales entourant la place du Trocadéro et couronnée par le palais de Chaillot. Il offre l'une des meilleures vues sur la tour Eiffel à Paris.</div>
+    </div>
+  
+  <script src="./js/three.min.js"></script>
+  <script src="./js/panolens.js"></script>
+
+
+
+  <div id="panolens-separate-container"></div>
+
+    <script>
+
+      var panorama_main_image, panorama_troca_image, viewer_main;
+      var infospot1, infospot2, infospot3, infospot4, infospot5;
+
+      // Main panorama
+      viewer_main = new PANOLENS.Viewer({ enableReticle: false, output: 'console', viewIndicator: true, autoRotate: false, autoRotateSpeed: 2, autoRotateActivationDuration: 5000, dwellTime: 1000 });
+
+      const logEvent = ( { type } ) => console.log( type );
+      viewer_main.reticle.addEventListener('reticle-start', logEvent );
+      viewer_main.reticle.addEventListener('reticle-update', logEvent );
+      viewer_main.reticle.addEventListener('reticle-end', logEvent );
+      viewer_main.reticle.addEventListener('reticle-ripple-start', logEvent );
+      viewer_main.reticle.addEventListener('reticle-ripple-end', logEvent );
+
+      panorama_main_image = new PANOLENS.ImagePanorama( 'asset/textures/equirectangular/paris.jpg' );
+      panorama_main_image.addEventListener( 'progress',function(e){
+        console.log(e.progress);
+      });
+
+      panorama_troca_image = new PANOLENS.ImagePanorama( 'asset/textures/equirectangular/troca.jpg' );
+      panorama_troca_image.addEventListener( 'progress',function(e){
+        console.log(e.progress);
+      });
+
+      panorama_main_image.link( panorama_troca_image, new THREE.Vector3( -8000, -3000, -5000 ) );
+      panorama_troca_image.link( panorama_main_image, new THREE.Vector3( 2630.30, 132.81, 3643.93 ) );
+
+      infospot3 = new PANOLENS.Infospot( 100, PANOLENS.DataImage.Info );
+      infospot3.position.set( 2000, 1000, 0 );
+      infospot3.addHoverElement( document.getElementById( 'desc-container' ), 200 );
+
+      infospot4 = new PANOLENS.Infospot( 100, PANOLENS.DataImage.Info );
+      infospot4.position.set( 1500, 1000, 0 );
+      infospot4.addHoverElement( document.getElementById( 'desc-container2' ), 200 );
+
+      infospot5 = new PANOLENS.Infospot( 100, PANOLENS.DataImage.Info );
+      infospot5.position.set( -3000, 100, 2000 );
+      infospot5.addHoverElement( document.getElementById( 'desc-container3' ), 200 );
+
+      infospot2 = new PANOLENS.Infospot( 350, PANOLENS.DataImage.Info );
+      infospot2.position.set( -7000, -1000, -5000 );
+      infospot2.addHoverText( 'Trocadero' );
+
+      infospot1 = new PANOLENS.Infospot( 350, PANOLENS.DataImage.Info );
+      infospot1.position.set( -7000, -1000, -5000 );
+      infospot1.addHoverText( 'Du texte ici' );
+
+      infospot6 = new PANOLENS.Infospot( 350, PANOLENS.DataImage.Info );
+      infospot6.position.set( -6000, -1000, -5000 )
+      infospot6.addHoverElement( document.getElementById( 'desc-container4' ), 200 );
+
+      panorama_main_image.add( infospot2, infospot3, infospot4 );
+      panorama_troca_image.add( infospot5, infospot1, infospot6 );
+      
+      viewer_main.add( panorama_main_image, panorama_troca_image );
+
+      // Test repeated scenario
+      viewer_main.enableControl( PANOLENS.CONTROLS.DEVICEORIENTATION );
+      viewer_main.enableEffect( PANOLENS.MODES.CARDBOARD );
+      viewer_main.enableControl( PANOLENS.CONTROLS.ORBIT );
+      viewer_main.enableEffect( PANOLENS.MODES.NORMAL );
+    </script>
+
+  </body>
+</html>
